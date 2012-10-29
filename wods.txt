@@ -562,7 +562,3 @@ sphinx pose
 #MOB
 bridge pose
 
-
-
-#GLOSSARY:
-TABATA: repeat for 4 minutes total: 20 seconds intense work, 10 seconds rest
