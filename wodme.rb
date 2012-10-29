@@ -1,10 +1,16 @@
 require 'sinatra'
 
+@hat 
 @WODS
 @MOBS
 
 before do
   loadwods
+  @hat = Random.new(Time.now.to_i/(60*60*24))
+end
+
+get '/' do 
+  
 end
 
 get '/mob' do
@@ -12,12 +18,16 @@ get '/mob' do
 end
 
 get '/wod' do
-  @WODS[rand(@WODS.size)].gsub(/\n/,"<br />")
+  @WODS[@hat.rand(@WODS.size)].gsub(/\n/,"<br />")
 end
 
 
 def n_of_list(n,list)
-  n.times.map{|n| list[rand(list.size)]}
+  ret = []
+  list.each_index do |i|
+    ret << list[i] if @hat.rand < (n-ret.size)/(list.size-i.to_f) 
+  end 
+  ret
 end
 
 def loadwods
