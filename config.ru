@@ -1,3 +1,2 @@
-require 'wodme.rb'
-
+require './wodme.rb'
 run Sinatra::Application
