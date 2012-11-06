@@ -1,0 +1,12 @@
+!!!
+%html(dir="ltr" lang="en-US" class=" -webkit")
+  %head
+    %title WOD ME
+    %link(rel="stylesheet" href="css/bootstrap.css")
+  %body
+    %div.container
+      %div.page-header
+        %h1== Workout for #{Time.now.strftime('%F')}
+      = yield
+      %div.page-footer
+        = @now 

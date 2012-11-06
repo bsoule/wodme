@@ -1,37 +1,28 @@
 require 'sinatra'
-
-@hat 
-@WODS
-@MOBS
+require 'haml'
+require 'active_support/time'
 
 before do
-  loadwods
-  @hat = Random.new(Time.now.to_i/(60*60*24))
+  @now = Time.now.in_time_zone(ActiveSupport::TimeZone["America/Los_Angeles"])
+  hat = Random.new(Time.now.to_i/(60*60*24))
+  wods,mobs = loadwods
+  @WOD = wods[hat.rand(wods.size)].split /\n/
+  @MOB = n_of_list(3,mobs,hat)
 end
 
-get '/' do 
-  
+get %r{/(mob|wod)?} do
+  haml :index
 end
 
-get '/mob' do
-  n_of_list(3,@MOBS).join("<br />") 
-end
-
-get '/wod' do
-  @WODS[@hat.rand(@WODS.size)].gsub(/\n/,"<br />")
-end
-
-
-def n_of_list(n,list)
+def n_of_list(n,list,hat=Random)
   ret = []
   list.each_index do |i|
-    ret << list[i] if @hat.rand < (n-ret.size)/(list.size-i.to_f) 
+    ret << list[i] if hat.rand < (n-ret.size)/(list.size-i.to_f) 
   end 
   ret
 end
 
 def loadwods
-  return if @WODS
   wods = ''
   mobs = ''
   File.open('wods.txt','r').each do |line|
@@ -41,8 +32,8 @@ def loadwods
       mobs << line
     end
   end 
-  @WODS = wods.split(/\s*#WOD\s*/).reject{|line| line == "" }
-  @MOBS = mobs.split(/\s*#MOB\s*/).reject{|line| line == "" }
+  [wods.split(/\s*#WOD\s*/).reject{|line| line == "" },
+   mobs.split(/\s*#MOB\s*/).reject{|line| line == "" }]
 end 
 
 
