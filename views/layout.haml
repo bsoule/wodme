@@ -7,7 +7,7 @@
   %body
     %div.container
       %div.page-header
-        %h1== Workout for #{Time.now.strftime('%F')}
+        %h1== Workout for #{@now.strftime('%F')}
       = yield
       %div.page-footer
         = @now 
