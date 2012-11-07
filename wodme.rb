@@ -4,7 +4,7 @@ require 'active_support/time'
 
 before do
   @now = Time.now.in_time_zone(ActiveSupport::TimeZone["America/Los_Angeles"])
-  hat = Random.new(Time.now.to_i/(60*60*24))
+  hat = Random.new(@now.to_i/(60*60*24))
   wods,mobs = loadwods
   @WOD = wods[hat.rand(wods.size)].split /\n/
   @MOB = n_of_list(3,mobs,hat)
