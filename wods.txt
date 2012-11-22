@@ -328,8 +328,6 @@ handstand 30 seconds
 #WOD 
 100 burpees.
 #WOD 
-Run 2 miles.
-#WOD 
 10 rounds:
 10 push-ups 
 10 squats 
